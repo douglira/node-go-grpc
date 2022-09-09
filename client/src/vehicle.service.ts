@@ -1,27 +1,42 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
 import { Vehicle, StoreVehicleDto } from './vehicles.dto';
 
-interface VehicleClient {
-  StoreVehicle(storeVehicleDto: StoreVehicleDto): Observable<Vehicle>;
-  UpdateVehicle(vehicle: Vehicle): Observable<Vehicle>;
-  GetVehicle(vehicleId: { vehicleId: number }): Observable<Vehicle>;
-  ListVehicles(): Observable<Vehicle[]>;
-  DeleteVehicle(vehicleId: { vehicleId: number }): Observable<void>;
+interface IVehicleClient {
+  StoreVehicle(storeVehicleDto: StoreVehicleDto): Promise<Vehicle>;
+  UpdateVehicle(vehicle: Vehicle): Promise<Vehicle>;
+  GetVehicle(data: { vehicleId: number }): Promise<Vehicle>;
+  ListVehicles(): Promise<Vehicle[]>;
+  DeleteVehicle(data: { vehicleId: number }): Promise<void>;
 }
 @Injectable()
 export class VehicleService implements OnModuleInit {
-  private vehicleClient: VehicleClient;
+  private vehicleClient: IVehicleClient;
 
   constructor(@Inject('VEHICLE_PACKAGE') private client: ClientGrpc) {}
 
   onModuleInit() {
     this.vehicleClient =
-      this.client.getService<VehicleClient>('VehicleService');
+      this.client.getService<IVehicleClient>('VehicleService');
   }
 
-  store(storeVehicleDto: StoreVehicleDto): Observable<Vehicle> {
+  store(storeVehicleDto: StoreVehicleDto): Promise<Vehicle> {
     return this.vehicleClient.StoreVehicle(storeVehicleDto);
+  }
+
+  update(vehicle: Vehicle): Promise<Vehicle> {
+    return this.vehicleClient.UpdateVehicle(vehicle);
+  }
+
+  findOne(data: { vehicleId: number }): Promise<Vehicle> {
+    return this.vehicleClient.GetVehicle(data);
+  }
+
+  findAll(): Promise<Vehicle[]> {
+    return this.vehicleClient.ListVehicles();
+  }
+
+  remove(data: { vehicleId: number }): Promise<void> {
+    return this.vehicleClient.DeleteVehicle(data);
   }
 }
