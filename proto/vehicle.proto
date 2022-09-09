@@ -2,7 +2,7 @@ syntax = "proto3";
 package vehicle;
 
 service VehicleService {
-  rpc StoreVehicle (Vehicle) returns (Vehicle);
+  rpc StoreVehicle (VehicleRegistration) returns (Vehicle);
   rpc UpdateVehicle (Vehicle) returns (Vehicle);
   rpc GetVehicle (VehicleId) returns (Vehicle);
   rpc ListVehicles (Void) returns (Vehicle);
@@ -13,6 +13,12 @@ message Void {}
 
 message VehicleId {
   int32 vehicleId = 1;
+}
+
+message VehicleRegistration {
+  string brand = 1;
+  string model = 2;
+  int32 year = 3;
 }
 
 message Vehicle {
