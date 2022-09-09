@@ -1,0 +1,23 @@
+syntax = "proto3";
+package vehicle;
+
+service VehicleService {
+  rpc StoreVehicle (Vehicle) returns (Vehicle);
+  rpc UpdateVehicle (Vehicle) returns (Vehicle);
+  rpc GetVehicle (VehicleId) returns (Vehicle);
+  rpc ListVehicles (Void) returns (Vehicle);
+  rpc DeleteVehicle (VehicleId) returns (Void);
+}
+
+message Void {}
+
+message VehicleId {
+  int32 vehicleId = 1;
+}
+
+message Vehicle {
+  int32 id = 1;
+  string brand = 2;
+  string model = 3;
+  int32 year = 4;
+}
