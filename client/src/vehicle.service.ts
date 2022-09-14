@@ -6,7 +6,7 @@ interface IVehicleClient {
   StoreVehicle(storeVehicleDto: StoreVehicleDto): Promise<Vehicle>;
   UpdateVehicle(vehicle: Vehicle): Promise<Vehicle>;
   GetVehicle(data: { vehicleId: number }): Promise<Vehicle>;
-  ListVehicles(): Promise<Vehicle[]>;
+  ListVehicles(data: any): Promise<Vehicle[]>;
   DeleteVehicle(data: { vehicleId: number }): Promise<void>;
 }
 @Injectable()
@@ -33,7 +33,7 @@ export class VehicleService implements OnModuleInit {
   }
 
   findAll(): Promise<Vehicle[]> {
-    return this.vehicleClient.ListVehicles();
+    return this.vehicleClient.ListVehicles({});
   }
 
   remove(data: { vehicleId: number }): Promise<void> {

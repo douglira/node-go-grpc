@@ -11,6 +11,7 @@ import { VehicleService } from './vehicle.service';
         name: 'VEHICLE_PACKAGE',
         transport: Transport.GRPC,
         options: {
+          url: '0.0.0.0:8080',
           package: 'vehicle',
           protoPath: join(__dirname, '../../proto/vehicle.proto'),
         },

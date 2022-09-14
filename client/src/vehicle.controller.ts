@@ -19,8 +19,16 @@ export class VehicleController {
     return this.vehicleService.store(storeVehicleDto);
   }
 
-  @Put()
-  async update(@Body() vehicle: Vehicle): Promise<Vehicle> {
+  @Put(':id')
+  async update(
+    @Param('id') id: number,
+    @Body() vehicleDto: StoreVehicleDto,
+  ): Promise<Vehicle> {
+    const vehicle = new Vehicle();
+    vehicle.id = id;
+    vehicle.brand = vehicleDto.brand;
+    vehicle.model = vehicleDto.model;
+    vehicle.year = vehicleDto.year;
     return this.vehicleService.update(vehicle);
   }
 
