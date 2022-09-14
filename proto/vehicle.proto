@@ -5,7 +5,7 @@ service VehicleService {
   rpc StoreVehicle (VehicleRegistration) returns (Vehicle);
   rpc UpdateVehicle (Vehicle) returns (Vehicle);
   rpc GetVehicle (VehicleId) returns (Vehicle);
-  rpc ListVehicles (Void) returns (Vehicle);
+  rpc ListVehicles (Void) returns (VehiclesList);
   rpc DeleteVehicle (VehicleId) returns (Void);
 }
 
@@ -26,4 +26,8 @@ message Vehicle {
   string brand = 2;
   string model = 3;
   int32 year = 4;
+}
+
+message VehiclesList {
+  repeated Vehicle vehicles = 1;
 }
